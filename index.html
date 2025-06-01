@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bonfire - Introspective Poems & Thoughts</title>
+<style>
+  /* Reset and basic styles */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    background: radial-gradient(ellipse at center, #1a1a1a 0%, #000000 80%);
+    color: #f0e7db;
+    font-family: 'Georgia', serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+  }
+  
+  h1 {
+    margin: 0;
+    font-weight: 700;
+    font-size: clamp(3.5rem, 7vw, 4.5rem); /* Increased from 2.5rem-3.2rem */
+    color: #ffae42;
+    letter-spacing: 0.12em;
+    text-shadow:
+      0 0 8px #ffaa00cc,
+      0 0 20px #ff7700bb,
+      0 0 30px #ff5511dd;
+    text-align: center;
+    line-height: 1.2; /* Optional: makes the header taller */
+    padding-top: 10px; /* Optional: adds space above */
+    padding-bottom: 10px; /* Optional: adds space below */
+  }
+  
+  h2 {
+    font-weight: 400;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    color: #f7c97f;
+    margin: 5px 0 20px 0;
+    font-style: italic;
+    max-width: min(90vw, 450px);
+    text-align: center;
+  }
+  
+  /* Welcome message */
+  .welcome-message {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    color: #ffd97d;
+    text-align: center;
+    margin-bottom: 50px;
+    opacity: 0.8;
+    max-width: min(90vw, 600px);
+  }
+
+  /* Main content area */
+  main.content {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 60vh;
+    min-height: 500px;
+    margin: 20px auto;
+  }
+
+  /* Central bonfire - Modified for GIF */
+  .bonfire-container {
+    position: absolute;
+    width: min(60vw, 320px);
+    height: min(60vw, 320px);
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Campfire GIF container */
+  .campfire-gif {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .campfire-gif img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 15px #ff6f00dd);
+    border-radius: 10px;
+  }
+  
+ 
+  /* Illuminated glow circle around the bonfire */
+  .light-glow {
+    position: absolute;
+    width: 180%;
+    height: 180%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(255, 140, 0, 0.3) 0%, transparent 80%);
+    pointer-events: none;
+    z-index: 1;
+    filter: blur(12px);
+    animation: flickerGlow 3s infinite alternate ease-in-out;
+  }
+  
+  @keyframes flickerGlow {
+    0% { opacity: 0.8; }
+    100% { opacity: 1; }
+  }
+
+  /* Tents container - circular layout */
+  .tents-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
+
+  /* Tent styling */
+  .tent {
+    position: absolute;
+    width: clamp(60px, 14vw, 90px);      /* reduced size */
+    height: clamp(75px, 17vw, 110px);   /* reduced size */
+    cursor: pointer;
+    border-radius: 16px 16px 8px 8px;
+    box-shadow:
+      0 5px 12px rgba(0,0,0,0.5),
+      0 0 18px rgba(255, 140, 0, 0.9);
+    background: linear-gradient(135deg, #413000 45%, #6d4b00 100%);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 10px;                /* slightly reduced */
+    filter: drop-shadow(0 3px 8px #ff8c00bb);
+    opacity: 0;
+    animation: fadeInScale 0.6s forwards;
+    will-change: transform, filter;
+    z-index: 2;
+    transform-origin: bottom center;
+  }
+  
+  @keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  
+  .tent:hover,
+  .tent:focus {
+    outline: none;
+    transform: scale(1.15) translateY(-10px);
+    box-shadow:
+      0 8px 18px rgba(0,0,0,0.7),
+      0 0 35px #ff8c00ee,
+      0 0 25px #ffad33bb,
+      0 0 15px #ffaa00aa;
+    filter: drop-shadow(0 0 20px #ff8c00);
+  }
+
+  /* Tent opening animation */
+  .tent.open {
+    animation: tentOpen 0.6s forwards;
+    z-index: 20;
+  }
+  
+  @keyframes tentOpen {
+    0% { transform: scale(1); }
+    20% { transform: scale(1.2) translateY(-20px); }
+    40% { transform: scale(1.1) translateY(-10px) rotate(-5deg); }
+    60% { transform: scale(1.15) translateY(-15px) rotate(5deg); }
+    80% { transform: scale(1.1) translateY(-10px) rotate(-2deg); }
+    100% { transform: scale(1.15) translateY(-15px); }
+  }
+
+  /* Enhanced tent roof shape with layered shadows & border */
+  .tent::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100%;
+    height: 60%;
+    background: linear-gradient(135deg, #a7850a 45%, #dba10b 100%);
+    clip-path: polygon(50% 0%, 94% 92%, 80% 100%, 20% 100%, 6% 92%);
+    box-shadow:
+      inset 0 5px 10px rgba(255, 255, 200, 0.6),
+      0 3px 8px rgba(0, 0, 0, 0.85);
+    transform: translateX(-50%);
+    border-radius: 14px 14px 6px 6px;
+    /* border: 2px solid #bf9a21; */   /* Remove yellow border */
+    z-index: 4;
+    transition: all 0.3s ease;
+  }
+  
+  /* Tent flap that opens */
+  .tent::after {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    width: 80%;
+    height: 40%;
+    background: linear-gradient(135deg, #6d4b00 45%, #413000 100%);
+    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    transform: translateX(-50%);
+    transform-origin: top center;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 5;
+    opacity: 0;
+  }
+  
+  .tent.open::after {
+    opacity: 1;
+    transform: translateX(-50%) rotateX(180deg);
+  }
+  
+  .tent-title {
+    position: relative;
+    font-weight: 700;
+    font-size: clamp(0.9rem, 2vw, 1.15rem);
+    color: #ffd97d;
+    letter-spacing: 0.12em;
+    text-align: center;
+    text-shadow: 0 0 9px #ffb942;
+    z-index: 6;
+    padding: 0 5px;
+  }
+
+  /* Modal styles */
+  .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    max-width: 520px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 25px 30px;
+    background: rgba(26, 26, 26, 0.95);
+    border-radius: 14px;
+    box-shadow: 0 0 30px 5px rgba(255, 140, 0, 0.9);
+    color: #ffe8b3;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    z-index: 302;
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    scroll-behavior: smooth;
+    will-change: transform, opacity;
+  }
+  
+  .modal.active {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .modal h3 {
+    margin-top: 0;
+    color: #ffaa22;
+    font-size: 1.9rem;
+    text-shadow: 0 0 8px #ff8c00;
+  }
+  
+  .modal h4 {
+    margin-top: 1.5em;
+    margin-bottom: 0.3em;
+    color: #f8ae22;
+    font-weight: 600;
+    font-style: italic;
+  }
+  
+  .modal p {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    margin-bottom: 1.2em;
+    white-space: pre-wrap;
+  }
+  
+  .modal .close-btn {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    background: #662200;
+    border: none;
+    color: #ffd97d;
+    padding: 7px 14px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 0 8px #ff8c00dd;
+    transition: background-color 0.25s ease;
+  }
+  
+  .modal .close-btn:hover,
+  .modal .close-btn:focus {
+    background: #ff8c00;
+    color: #330000;
+    outline: none;
+  }
+  
+  /* Scrollbar for modal */
+  .modal::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .modal::-webkit-scrollbar-track {
+    background: #1a1a1a;
+  }
+  
+  .modal::-webkit-scrollbar-thumb {
+    background: #ff8c00ee;
+    border-radius: 12px;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    color: #bb9b4c;
+    font-size: 0.95rem;
+    opacity: 0.8;
+    font-family: 'Georgia', serif;
+    margin-top: 100px;      /* Increased from 25px for more space */
+    margin-bottom: 20px;   /* Add bottom margin to keep it above the edge */
+    z-index: 1;
+    position: relative;    /* Ensure it stays in normal flow */
+  }
+  
+  footer a {
+    color: #ffae42;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  footer a:hover,
+  footer a:focus {
+    text-decoration: underline;
+    color: #ffaa00;
+    outline: none;
+  }
+
+  /* Ember animation */
+  .ember {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 3;
+    animation-timing-function: ease-out;
+  }
+
+  /* Fire particle */
+  .fire-particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 4;
+    animation-timing-function: ease-out;
+    background: radial-gradient(circle, #ffcc44, transparent 70%);
+    filter: drop-shadow(0 0 4px #ffca00aa);
+  }
+
+  /* Smoke particle */
+  .smoke-particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    animation-timing-function: linear;
+    background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
+    filter: blur(4px);
+  }
+
+  /* Sound toggle button */
+  #soundToggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    background: #ff8c00cc;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 1.8rem;
+    box-shadow: 0 0 12px #ff8c00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+
+  #soundToggle:hover {
+    transform: scale(1.1);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    main.content {
+      height: 70vh;
+      min-height: 400px;
+    }
+    
+    .tent {
+      width: clamp(70px, 25vw, 120px);
+      height: clamp(90px, 30vw, 140px);
+    }
+    
+    .modal {
+      padding: 20px;
+      max-height: 85vh;
+    }
+    
+    .modal h3 {
+      font-size: 1.6rem;
+    }
+    
+    .modal p {
+      font-size: 1rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <h1>Bonfire</h1>
+  <h2>Where thoughts glow, and poems flicker</h2>
+  <div class="welcome-message">Welcome to my cozy corner of introspection and creativity. Click on the tents to explore!</div>
+
+  <main class="content">
+    <div class="bonfire-container">
+      <!-- Replace this src with your campfire GIF URL -->
+      <div class="campfire-gif">
+        <img src="campfire-gif.gif" />
+      </div>
+      <div class="light-glow"></div>
+    </div>
+    
+    <div class="tents-container" id="tentsContainer">
+      <!-- Tents will be positioned here by JavaScript -->
+    </div>
+  </main>
+
+  <!-- Modal Poems -->
+  <section id="poems" class="modal">
+    <button class="close-btn">&times;</button>
+    <h3>Poems</h3>
+
+    <h4>I'm Sorry</h4>
+    <p>
+One day under the sun's warm embrace,  
+I'll learn to love you again,  
+But shadows now cast on your face,  
+Have turned sunshine into rain.
+
+You blame me for things I’ve never done,  
+Ignoring my earnest plea,  
+You can’t see the battles I’ve won,  
+In striving to make us free.
+
+Your words, sharp like a dagger's edge,  
+Pierce my heart day by day,  
+I hide my woes, but you pledge,  
+To add to my dismay.
+
+I'm sorry for all that I get wrong,  
+For each and every mistake,  
+I regret it all, though it's been so long,  
+My heart feels like it might break.
+
+Accused of cheating, my soul feels torn,  
+Your doubts push me too far,  
+Yet still, for you, my love is sworn,  
+As constant as the northern star.
+
+In silence, I bear my load of strife,  
+Hiding the pain from your sight,  
+Yet you add to the burdened life,  
+With each unjust fight.
+
+One day under the sun's warm embrace,  
+I'll learn to love you again,  
+Hoping to heal this fractured space,  
+And wash away the pain.
+    </p>
+
+    <h4>Why does anything matter?</h4>
+    <p>
+Why does anything matter, when miles are so long?
+When nights feel so quiet, when days feel so wrong?
+It's the promise we made, through distance and tears,
+That binds us together, despite all our fears.
+
+The whispers you send me, though you're far away,
+Brings warmth to my heart in a delightful way.
+Each moment of waiting, each second we pine,
+Is proof that our love grows stronger through time.
+
+The silence, the longing, the space in between,
+Are just empty gaps where our dreams intervene.
+For all that we cherish, for all that we yearn,
+Will one day be real, when at last we return.
+
+So why does it matter, the distance we face?
+Because love like ours will always find grace.
+Every tear that we shed, every laugh that we share,
+Will prove in the end it was all worth the care.
+
+Why does anything matter, when miles are so long?
+When nights feel so quiet, when days feel so wrong?
+It’s the ache of the distance, the endless goodbyes,
+Yet still, we hold hope through dark, stormy skies.
+
+Each word that you send me, though it’s through a screen,
+Is a promise we keep, though the space in between.
+Your voice in the night, soft whispers of care,
+Reminds me that love can still conquer the air.
+
+Why do we hold on when we could just let go?
+Because in your embrace, there’s a warmth I still know.
+The future we dream of, the moments we crave,
+Are worth all the battles, the strength that we gave.
+
+Though time feels relentless, and patience runs thin,
+It’s the thought of our future that keeps pulling me in.
+We’re building a life, with every word and each kiss,
+And when we’re together, there’ll be nothing we miss.
+
+Each tear that falls now, each lonely night spent,
+Will be worth it someday when the waiting is bent.
+We’ll laugh at the distance, the years spent apart,
+Because in the end, I’ll hold you close to my heart.
+
+Why does it matter, the struggle, the pain?
+Because love like ours will never be in vain.
+The world may seem heavy, the road far ahead,
+But love is the light in every word we’ve said.
+
+So we hold on to hope, though the wait may be long,
+Because in your arms is where I belong.
+And when we’re together, every moment we’ve fought,
+Will prove why this love was worth every thought.
+
+In the end, it will matter, each tear, every day,
+Because love like ours will always find a way.
+Through miles and heartache, the doubts and the fears,
+We’ll stand side by side, through all of the years.
+    </p>
+  </section>
+
+  <!-- Modal Thoughts -->
+  <section id="thoughts" class="modal">
+    <button class="close-btn">&times;</button>
+    <h3>Thoughts</h3>
+
+    <h4>On the Sovereignty of the Soul</h4>
+    <p>
+There are things which belong to us, and things which never shall.
+My judgments, my actions, my will—these are mine.
+Fortune, fame, the weathered faces of men—these are not.
+To bind my peace to the wind is to chase shadows in the dust.
+But to anchor my soul in virtue—that is freedom unshaken.
+
+What folly it is to rage at the rain or plead with the stars.
+They care not for our cries, nor are they cruel—
+They simply are.
+And so I choose, each dawn, to be just in the unjust hour,
+To show temperance in the abundance of wine,
+And courage when the night is deepest.
+
+Let the world spin as it will.
+My harbor is not in calm seas, but in a steady hand upon the helm.
+The storm is not my enemy, nor the calm my friend.
+I am not made to command the tides—
+I am made to govern myself.
+    </p>
+
+    <h4>On Death and the Flame of Life</h4>
+    <p>
+Remember, mortal: you are but a breath,
+A brief fire dancing in the dark.
+You were not promised the morrow, nor owed even the dusk.
+And yet, how you squander the hour as if eternity lies waiting.
+The wise remember death—not in dread,
+But in reverence for this fragile bloom of life.
+
+Does the river mourn the sea into which it flows?
+Does the fruit resist the hand of harvest?
+No. It fulfills its nature and yields with grace.
+So too must we—when the end comes,
+Let us be as the ripened olive,
+Falling gladly, having fed the world with our oil.
+
+Memento mori, they say—not to frighten, but to awaken.
+For death is the final teacher,
+Whispering: “Live now, and live well.”
+Not tomorrow. Not when the stars align.
+But here, where your feet touch the earth,
+And your heart dares to beat.
+    </p>
+  </section>
+
+  <!-- Modal About -->
+  <section id="about" class="modal">
+    <button class="close-btn">&times;</button>
+    <h3>About Bonfire</h3>
+    <p>
+      Welcome to Bonfire — a space kindled from reflections and revelations.<br/>
+      Here, through poems and thoughts, I share the warmth of quiet musings, the flicker of questions,<br/>
+      and the glow of hope found in life's simplest moments.<br/><br/>
+      This blog is a safe space for me, where I can freely document my vulnerabilities.<br/>
+      May you find solace, spark, and company by the fire.
+    </p>
+  </section>
+
+  <!-- Modal Favorites -->
+  <section id="favorites" class="modal">
+    <button class="close-btn">&times;</button>
+    <h3>My Favorites</h3>
+    <h4>Favorite Books</h4>
+    <p>
+      "48 Laws of Power" by Robert Greene: A masterclass in strategy and human behavior, revealing the timeless principles of power dynamics.
+    </p>
+    <p>
+      "The Alchemist" by Paulo Coelho: A philosophical tale about following one's dreams and listening to one's heart, set against a backdrop of magical realism.
+    </p>
+    <p>
+      "The Laws of Human Nature" by Robert Greene: An exploration of human behavior and psychology, offering insights into the motivations that drive us all.
+    </p>
+    <h4>Favorite Poem</h4>
+    <p>
+      "A Dream Within a Dream" by Edgar Allan Poe: A meditation on the nature of reality and the fleeting quality of life.
+    </p>
+  </section>
+
+  <!-- Modal Inspirations -->
+  <section id="inspirations" class="modal">
+    <button class="close-btn">&times;</button>
+    <h3>Inspirations</h3>
+    <h4>Nature's Beauty</h4>
+    <p>
+      The quiet rustle of leaves and the vast starry night fuel endless contemplation and creativity.
+    </p>
+    <h4>Human Connection</h4>
+    <p>
+      The subtle power of empathy and shared experiences inspires every word and line written here.
+    </p>
+  </section>
+
+  <!-- Modal Stories -->
+  <section id="stories" class="modal">
+    <button class="close-btn">&times;</button>
+    <h3>Stories</h3>
+    <h4>“The Hollow Corridor”</h4>
+    <p>
+The mall was never meant to be found. Not anymore.
+Buried under the weight of a collapsed highway and decades of urban decay, Stonebrook Plaza was a relic — a liminal corpse of consumerist ambition. The fluorescent lights still flickered, running on power no one could trace. There was no map. No entrance. Just the wrong turn, at the wrong hour, in the wrong state of mind.
+    </p>
+    <p>
+1. The Four Who Entered
+Carter Reeves, 38, a corporate strategist who had just been laid off after two decades of soul-deadening work. His severance was enough to buy a noose or a bottle — he chose both.
+
+Maya Joshi, 16, who ran from home after her parents tried to "fix her" through therapy and pills for what they called “an online identity disorder.” Her crime? Wanting to be called "he."
+
+Dale Thompson, 51, a homeless veteran with post-traumatic scars deeper than the stab wounds he got from a mugging last week. He still carried his service medal in a bloodstained sock.
+
+Evelyn Marris, 45, a mother who lost her son to a school shooting. Her face had been frozen in a smile since the day the media called him “collateral damage.”
+
+None of them planned to be there. The corridor simply opened — a parking garage that didn’t exist on any map. They walked in for different reasons. They stayed for the same one: the mall wouldn't let them leave.
+</p>
+<p>
+2. The Warped Aisles of Stonebrook
+At first, it resembled any abandoned shopping mall: broken glass, faded signs, mannequins with missing eyes. But then came the escalators that moved sideways, the food court that smelled of rot and warm meat, the mirrors that didn’t reflect.
+
+They found each other near the fountain — dry, but echoing the sound of splashing. Dale swore the water was blood.
+
+Each store they explored unearthed a piece of their past:
+
+Carter walked into a boardroom within a Sears. He saw his younger self suffocating under spreadsheets as his wife texted: “I’m leaving. You don’t look at me anymore.”
+
+Maya found a Hot Topic turned morgue. Her deadname echoed from the changing rooms as family members mocked her, wearing skin masks stitched from her selfies.
+
+Dale entered a toy store where every plushie screamed like the men he failed to save in Fallujah.
+
+Evelyn opened a daycare and saw her son’s bullet-riddled backpack, left on a rocking horse. The news anchor’s voice rang through the intercom: “He died for your freedom to bear arms.”
+
+None of it made sense. Until it did.
+</p>
+<p>
+3. The Blood Price
+The mall fed on their guilt. It thrived on unresolved trauma. It offered bargains they didn’t know they made.
+
+Each night, one of them changed. First, Carter found himself rearranging mannequins into boardroom meetings, whispering stock prices in his sleep. His eyes became glassy — hollow, like display windows.
+
+Dale snapped next. He tore into the mall's security guard, convinced he was an enemy combatant. The blood never came off his hands, no matter how long he stood under the flickering restroom faucet.
+
+Maya and Evelyn tried to escape, but the exit signs changed. "Exit" became "Exhibit." The mall had decided they were displays — broken artifacts of a society built on the bones of broken people.
+</p>
+<p>
+4. The Final Sale
+A week passed. Time stretched like the elastic waistband of the jeans in aisle five.
+
+Evelyn broke the glass of a Mothercare and found her son — or a stitched-up version of him, made from old teddy bear parts and a skull that didn’t fit. He blinked once and said, “You left me. The shooter didn’t.”
+
+Maya, shivering in a corner of the food court, carved her new name into the wall with a plastic knife. Then she looked down — it wasn’t the wall. It was her thigh.
+
+They held each other on the last night, surrounded by security footage of their worst moments — projected endlessly on every screen. Maya whispered, “Do you think this is hell?”
+
+Evelyn smiled. “No. Hell would be honest about what it is. This place lies. Just like the world outside.”
+</p>
+<p>
+5. No One Leaves Stonebrook
+In the morning, there were only mannequins — dressed in business suits, camo, hoodies, and a floral blouse with bloodstains.
+
+New guests arrived that evening. A TikTok influencer with too many hate comments. A delivery driver who lost his family to eviction. A lonely man addicted to VR.
+
+The mall welcomed them with warm lighting and familiar music.
+
+Stonebrook Plaza — Open 24/7. All regrets final. No refunds.
+</p>
+  </section>
+
+  <footer>
+    &copy; 2025 Bonfire. Built with ❤️. Find me on&nbsp;
+    <a href="https://github.com/smirk-dev" target="_blank" rel="noopener noreferrer">GitHub</a>
+    &nbsp;|&nbsp;
+    <a href="https://x.com/answerthisansh" target="_blank" rel="noopener noreferrer">X</a>.
+  </footer>
+
+  <audio id="ambientSound" loop preload="auto">
+    <source src="background_music.mp3" type="audio/mpeg">
+  </audio>
+
+  <button id="soundToggle" aria-label="Toggle ambient sound">
+    🔊
+  </button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Modal functionality
+      const modals = document.querySelectorAll('.modal');
+      const closeButtons = document.querySelectorAll('.close-btn');
+      let lastOpenedTent = null;
+      
+      // Create and position tents in a circle around the bonfire
+      function createTents() {
+        const container = document.getElementById('tentsContainer');
+        const tentData = [
+          { id: 'poems', title: 'Poems', delay: 0.1 },
+          { id: 'thoughts', title: 'Thoughts', delay: 0.2 },
+          { id: 'about', title: 'About', delay: 0.3 },
+          { id: 'favorites', title: 'Favorites', delay: 0.4 },
+          { id: 'inspirations', title: 'Inspirations', delay: 0.5 },
+          { id: 'stories', title: 'Stories', delay: 0.6 }
+        ];
+
+        const centerX = container.offsetWidth / 2;
+        const centerY = container.offsetHeight / 2;
+        const radius = Math.min(container.offsetWidth, container.offsetHeight) * 0.6;
+
+        tentData.forEach((tent, index) => {
+          let angle;
+          if (index < 3) {
+            angle = (-60 + index * 60) * (Math.PI / 180);
+          } else {
+            angle = (120 + (index - 3) * 60) * (Math.PI / 180);
+          }
+          const x = centerX + radius * Math.cos(angle) - 40; // adjust for image width
+          const y = centerY + radius * Math.sin(angle) - 40; // adjust for image height
+
+          // Create tent wrapper
+          const tentWrapper = document.createElement('div');
+          tentWrapper.style.position = 'absolute';
+          tentWrapper.style.left = `${x}px`;
+          tentWrapper.style.top = `${y}px`;
+          tentWrapper.style.display = 'flex';
+          tentWrapper.style.flexDirection = 'column';
+          tentWrapper.style.alignItems = 'center';
+          tentWrapper.style.cursor = 'pointer';
+
+          // Tent image
+          const tentImg = document.createElement('img');
+          tentImg.src = 'tent.png'; // <-- Replace with your tent image path
+          tentImg.alt = tent.title;
+          tentImg.style.width = '110px'; // adjust as needed
+          tentImg.style.height = '110px'; // adjust as needed
+          tentImg.style.objectFit = 'contain';
+          tentImg.tabIndex = 0;
+
+          // Tent title
+          const tentTitle = document.createElement('div');
+          tentTitle.textContent = tent.title;
+          tentTitle.style.marginTop = '6px';
+          tentTitle.style.fontWeight = '700';
+          tentTitle.style.fontSize = '1rem';
+          tentTitle.style.color = '#ffd97d';
+          tentTitle.style.textAlign = 'center';
+          tentTitle.style.textShadow = '0 0 9px #ffb942';
+
+          tentWrapper.appendChild(tentImg);
+          tentWrapper.appendChild(tentTitle);
+
+          tentWrapper.addEventListener('click', () => {
+            modals.forEach(modal => modal.classList.remove('active'));
+            if (lastOpenedTent) lastOpenedTent.classList.remove('open');
+            tentWrapper.classList.add('open');
+            lastOpenedTent = tentWrapper;
+            const modal = document.getElementById(tent.id);
+            if (modal) {
+              document.body.style.overflow = 'hidden';
+              modal.classList.add('active');
+            }
+          });
+
+          container.appendChild(tentWrapper);
+        });
+      }
+      
+      function closeModal(modal) {
+        document.body.style.overflow = '';
+        modal.classList.remove('active');
+        
+        // Close the tent when modal is closed
+        if (lastOpenedTent) {
+          lastOpenedTent.classList.remove('open');
+          lastOpenedTent = null;
+        }
+      }
+      
+      closeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          closeModal(button.closest('.modal'));
+        });
+      });
+      
+      modals.forEach(modal => {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            closeModal(modal);
+          }
+        });
+      });
+      
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          modals.forEach(modal => {
+            if (modal.classList.contains('active')) {
+              closeModal(modal);
+            }
+          });
+        }
+      });
+
+      // Sound toggle functionality
+      const ambientSound = document.getElementById('ambientSound');
+      const soundToggle = document.getElementById('soundToggle');
+      let soundEnabled = false;
+      
+      // Try to autoplay sound (may be blocked by browser)
+      ambientSound.volume = 0.3;
+      const playPromise = ambientSound.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          soundEnabled = false;
+          updateSoundButton();
+        });
+      }
+      
+      soundToggle.addEventListener('click', () => {
+        soundEnabled = !soundEnabled;
+        
+        if (soundEnabled) {
+          ambientSound.play();
+        } else {
+          ambientSound.pause();
+        }
+        
+        updateSoundButton();
+      });
+      
+      function updateSoundButton() {
+        soundToggle.textContent = soundEnabled ? '🔊' : '🔈';
+        soundToggle.style.backgroundColor = soundEnabled ? '#ff8c00ff' : '#555555cc';
+      }
+      
+      updateSoundButton();
+
+      // Particle effects
+      function createParticles() {
+        // Fire particles for bonfire
+        setInterval(() => {
+          createFireParticle();
+          if (Math.random() > 0.7) createSmokeParticle();
+        }, 100);
+        
+        // Embers for tents
+        setTimeout(() => {
+          const tents = document.querySelectorAll('.tent');
+          tents.forEach(tent => {
+            for (let i = 0; i < 8; i++) {
+              createTentEmber(tent);
+            }
+          });
+        }, 1000); // Delay to ensure tents are positioned
+      }
+      
+      function createTentEmber(tent) {
+        const ember = document.createElement('div');
+        ember.className = 'ember';
+        document.body.appendChild(ember);
+        
+        const tentRect = tent.getBoundingClientRect();
+        const startX = tentRect.left + tentRect.width * Math.random();
+        const startY = tentRect.top + tentRect.height * 0.8;
+        
+        const size = 2 + Math.random() * 4;
+        const duration = 2000 + Math.random() * 3000;
+        const delay = Math.random() * 5000;
+        
+        ember.style.width = `${size}px`;
+        ember.style.height = `${size}px`;
+        ember.style.left = `${startX}px`;
+        ember.style.top = `${startY}px`;
+        ember.style.opacity = '0';
+        
+        // Random color between yellow and orange
+        const hue = 30 + Math.random() * 30;
+        ember.style.backgroundColor = `hsla(${hue}, 100%, 60%, 0.8)`;
+        
+        const animation = ember.animate([
+          { 
+            opacity: 0,
+            transform: 'translate(0, 0) scale(1)',
+            backgroundColor: `hsla(${hue}, 100%, 60%, 0.8)`
+          },
+          { 
+            opacity: 1,
+            transform: 'translate(0, -10px) scale(1.2)',
+            backgroundColor: `hsla(${hue}, 100%, 70%, 1)`
+          },
+          { 
+            opacity: 0,
+            transform: 'translate(' + (Math.random() * 40 - 20) + 'px, -40px) scale(0.5)',
+            backgroundColor: `hsla(${hue}, 100%, 50%, 0)`
+          }
+        ], {
+          duration: duration,
+          delay: delay,
+          iterations: Infinity,
+          easing: 'ease-out'
+        });
+        
+        // Clean up if animation is cancelled
+        animation.oncancel = () => ember.remove();
+      }
+      
+      function createFireParticle() {
+        const particle = document.createElement('div');
+        particle.className = 'fire-particle';
+        document.body.appendChild(particle);
+        
+        const bonfire = document.querySelector('.bonfire-container');
+        const bonfireRect = bonfire.getBoundingClientRect();
+        const startX = bonfireRect.left + bonfireRect.width * (0.4 + Math.random() * 0.2);
+        const startY = bonfireRect.top + bonfireRect.height * 0.6;
+        
+        const size = 3 + Math.random() * 5;
+        const duration = 1000 + Math.random() * 2000;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${startX}px`;
+        particle.style.top = `${startY}px`;
+        particle.style.opacity = '0';
+        
+                const hue = 30 + Math.random() * 30; // Random hue for fire color
+        particle.style.backgroundColor = `hsla(${hue}, 100%, 50%, 1)`;
+
+        // Animate the fire particle
+        particle.animate([
+          { 
+            opacity: 1,
+            transform: 'translateY(0) scale(1)'
+          },
+          { 
+            opacity: 0,
+            transform: `translateY(-50px) scale(0.5)`
+          }
+        ], {
+          duration: duration,
+          easing: 'ease-out',
+          fill: 'forwards'
+        });
+
+        // Clean up after animation
+        particle.addEventListener('animationend', () => {
+          particle.remove();
+        });
+      }
+
+      function createSmokeParticle() {
+        const smoke = document.createElement('div');
+        smoke.className = 'smoke-particle';
+        document.body.appendChild(smoke);
+
+        const bonfire = document.querySelector('.bonfire-container');
+        const bonfireRect = bonfire.getBoundingClientRect();
+        const startX = bonfireRect.left + bonfireRect.width * (0.4 + Math.random() * 0.2);
+        const startY = bonfireRect.top + bonfireRect.height * 0.6;
+
+        const size = 10 + Math.random() * 10;
+        const duration = 3000 + Math.random() * 2000;
+
+        smoke.style.width = `${size}px`;
+        smoke.style.height = `${size}px`;
+        smoke.style.left = `${startX}px`;
+        smoke.style.top = `${startY}px`;
+        smoke.style.opacity = '0.5';
+
+        // Animate the smoke particle
+        smoke.animate([
+          { 
+            opacity: 0.5,
+            transform: 'translateY(0) scale(1)'
+          },
+          { 
+            opacity: 0,
+            transform: `translateY(-100px) scale(1.5)`
+          }
+        ], {
+          duration: duration,
+          easing: 'ease-out',
+          fill: 'forwards'
+        });
+
+        // Clean up after animation
+        smoke.addEventListener('animationend', () => {
+          smoke.remove();
+        });
+      }
+
+      // Initialize tents and particles
+      createTents();
+      createParticles();
+    });
+  </script>
+</body>
+</html>
+<script>
+  // Ensure the ambient sound plays on user interaction
+  document.addEventListener('click', () => {
+    const ambientSound = document.getElementById('ambientSound');
+    if (ambientSound.paused) {
+      ambientSound.play().catch(error => {
+        console.warn('Autoplay prevented:', error);
+      });
+    }
+  });
