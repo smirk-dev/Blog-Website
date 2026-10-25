@@ -1,0 +1,22 @@
+# Bonfire
+
+> Bonfire is the blog of poems, thoughts and short stories by Suryansh Mishra. It is a single page: a campfire with tents around it, and each tent opens a collection.
+
+## About the author
+
+Suryansh Mishra is an AI engineer from Noida, India. He is the co-founder and CTO of Alethman, where he built the engine that follows how news stories form and spread, and a forward deployed engineer at InboxKit. He studies computer science at UPES with a minor in AI from IIT Ropar, contributes to Rocket.Chat, and has won three national hackathons. He also paints and writes poetry.
+
+## What is on Bonfire
+
+- Poems: "I'm Sorry", "Why does anything matter?"
+- Thoughts: "On the Sovereignty of the Soul", "On Death and the Flame of Life"
+- Stories: "The Hollow Corridor"
+- About, Favorites and Inspirations
+
+## Links
+
+- [Bonfire](https://bonfire.suryanshmishra.com/): this blog
+- [suryanshmishra.com](https://suryanshmishra.com/): his home, an open world forest that leads to each of his sites
+- [About Suryansh Mishra](https://suryanshmishra.com/about/): who he is, in plain text
+- [Code portfolio](https://code.suryanshmishra.com/)
+- [Art portfolio and shop](https://art.suryanshmishra.com/)
